@@ -21,7 +21,7 @@ def token_obrigatório(f):
         # Se temos um token, validar acesso consultando o BD
         try:
          
-            resultado = jwt.decode(token,app.config['SECRET_KEY'])
+            resultado = jwt.decode(token,app.config['SECRET_KEY'],algorithms=["HS256"])
             autor = Autor.query.filter_by(id_autor=resultado['id_autor']).first()
 
         except:
@@ -146,7 +146,7 @@ def obter_autor_por_id(autor,id_autor):
 @app.route('/autores', methods=['POST'])
 @token_obrigatório
 def novo_autor(autor):
-    print('deu merda')
+    print('caiu')
     novo_autor = request.get_json()
     autor = Autor(
         nome=novo_autor['nome'], senha=novo_autor['senha'], email=novo_autor['email'])
@@ -210,8 +210,9 @@ def login():
     if auth.password == usuario.senha:
         token = jwt.encode({'id_autor': usuario.id_autor, 'exp': datetime.utcnow() + 
         timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        econde_token = bytes(token,encoding='utf-8')
-        return jsonify({'token':econde_token.decode('utf-8')})
+        return jsonify({'token': token})
+        # econde_token = bytes(token,encoding='utf-8')
+        # return jsonify({'token':econde_token.decode('utf-8')})
     return make_response('Login Inválido', 401, {'WWW-Authenticate':'Basic realm="Login obrigatório"'}) #Ultimo parametro obrigatório para aparecer uma tela de login
 
 app.run(port=5000, host='localhost', debug=True)
