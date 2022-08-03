@@ -215,4 +215,5 @@ def login():
         # return jsonify({'token':econde_token.decode('utf-8')})
     return make_response('Login Inválido', 401, {'WWW-Authenticate':'Basic realm="Login obrigatório"'}) #Ultimo parametro obrigatório para aparecer uma tela de login
 
-app.run(port=5000, host='localhost', debug=True)
+if __name__ == '__main__':
+    app.run(port=5000, host='localhost', debug=True)
