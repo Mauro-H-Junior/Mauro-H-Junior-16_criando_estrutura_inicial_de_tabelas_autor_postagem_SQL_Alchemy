@@ -31,7 +31,7 @@ def token_obrigatório(f):
 
 #-------------------------------------------
 
-@app.route('/postagem')
+@app.route('/')
 @token_obrigatório
 def obter_postagens(autor):
     postagens = Postagem.query.all()
