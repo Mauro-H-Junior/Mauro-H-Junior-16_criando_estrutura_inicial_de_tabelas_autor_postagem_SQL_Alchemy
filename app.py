@@ -215,5 +215,5 @@ def login():
         # return jsonify({'token':econde_token.decode('utf-8')})
     return make_response('Login Inválido', 401, {'WWW-Authenticate':'Basic realm="Login obrigatório"'}) #Ultimo parametro obrigatório para aparecer uma tela de login
 
-if __name__ == '__main__':
+if __name__ == '__main__': # Para funcionar corretamente no Heroku
     app.run(port=5000, host='localhost', debug=True)
